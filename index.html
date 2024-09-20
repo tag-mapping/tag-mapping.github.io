@@ -53,6 +53,24 @@
     }
   </script>
 
+<script>
+  function interactiveIframeOnload(iframe) {
+    // This function is mostly from ChatGPT
+    var iframeDoc = iframe.contentWindow.document;
+
+    var contentWidth = iframeDoc.body.scrollWidth;
+    var iframeWidth = iframe.clientWidth;
+    var scaleFactor = iframeWidth / contentWidth;
+
+    iframeDoc.body.style.transform = "scale(" + scaleFactor + ")";
+    iframeDoc.body.style.transformOrigin = "0 0";
+
+    iframeDoc.body.style.width = (100 / scaleFactor) + "%"; // Compensates for the scale so no overflow
+
+    iframe.style.height = iframeDoc.body.scrollHeight + 'px';
+  };
+</script>
+
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
         rel="stylesheet">
 
@@ -242,10 +260,14 @@
 
     <div class="columns">
       <div class="column has-text-centered">
-        <iframe id="interactive-3d-viz" src="media/interactive/piano.html" width="1010px" height="620px" frameborder="0"></iframe>
+        <iframe id="interactive-3d-viz" src="media/interactive/piano.html" 
+          scrolling="no" frameborder="0" 
+          style="max-width: 1010px; width: 100%;"
+          onload="interactiveIframeOnload(this)">
+      </iframe>
       </div>
     </div>
-
+    
   </div>
 </section>
 
